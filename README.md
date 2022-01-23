@@ -12,6 +12,16 @@
 
 Sounds exciting? If not then apprecieate your time reading till here and have a good day, otherwise let's jump right in to get familiar with the framework 😉
 
+## Maven Dependency
+[![Maven Central](https://img.shields.io/maven-central/v/com.simplj.flows/sjf.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.simplj.flows%22%20AND%20a:%22sjf%22)
+```
+<dependency>
+  <groupId>com.simplj.flows</groupId>
+  <artifactId>sjf</artifactId>
+  <version>0.1</version>
+</dependency>
+```
+
 Table of contents
 =================
 <!--ts-->
