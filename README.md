@@ -32,6 +32,7 @@ Table of contents
     * [ExecutionResult\<O>](#executionresulto)
     * [ExecutionEngine](#executionengine)
     * [StepFactory](#stepfactory)
+  * [Working with various steps](#working-with-various-steps)
   * [Bonus: Injecting Steps](#bonus-injecting-steps)
 <!--te-->
 
@@ -150,6 +151,9 @@ Let's kick-off by understanding the key concepts of SJF.
 
 * #### StepFactory
   > This `factory` class helps to create the various types of step that SJF offers. These steps will be discussed in detail in the later section of this article.
+
+## Working with various steps
+  >TO BE UPDATED
 
 ## Bonus: Injecting Steps
   > As SJF uses our home grown dependency injection framework [SDF](https://github.com/simplj/sdf), it is possible to inject and run steps/sub-flows dynamically in a flow. This can help running different sub-flows according to the need.
