@@ -15,12 +15,14 @@ Sounds exciting? If not then apprecieate your time reading till here and have a 
 Table of contents
 =================
 <!--ts-->
-   * [Key Concepts](#key-concepts)
-     * [Exectuable\<I, O>](#exectuablei-o)
-     * [Step\<I, O>](#stepi-o)
-     * [Flow\<I, O>](#flowi-o)
-     * [ExecutionResult\<O>](#executionresulto)
-     * [ExecutionEngine](#executionengine)
+  * [Key Concepts](#key-concepts)
+    * [Exectuable\<I, O>](#exectuablei-o)
+    * [Step\<I, O>](#stepi-o)
+    * [Flow\<I, O>](#flowi-o)
+    * [ExecutionResult\<O>](#executionresulto)
+    * [ExecutionEngine](#executionengine)
+    * [StepFactory](#stepfactory)
+  * [Bonus: Injecting Steps]
 <!--te-->
 
 ## Key Concepts
@@ -133,5 +135,12 @@ Let's kick-off by understanding the key concepts of SJF.
   >  *   - {isEven: 5 -> false (0ms)}
   >  */
   > ```
-  > 
+
 💡 _It is advised to always provide a name to a step. This will increase readability of flow execution log (as shown above in the output section) and help in debugging._
+
+* #### StepFactory
+  > This `factory` class helps to create the various types of step that SJF offers. These steps will be discussed in detail in the later section of this article.
+
+* #### Bonus: Injecting Steps
+  > As SJF uses our home grown dependency injection framework [SDF](https://github.com/simplj/sdf), it is possible to inject and run steps/sub-flows dynamically in a flow. This can help running different sub-flows according to the need.
+  > For example, we may want to execute a pariticular step for dev environment and another step for all other environments. In this case, we can configure the steps as dependency using `@DependencyProvider` and assign id to the individual steps. Then, we can resolve the step by the corresponding id inside another flow to inject and run different steps in different environment.
