@@ -29,13 +29,14 @@ Table of contents
 =================
 <!--ts-->
   * [Key Concepts](#key-concepts)
-    * [Exectuable\<I, O>](#exectuablei-o)
-    * [Step\<I, O>](#stepi-o)
-    * [Flow\<I, O>](#flowi-o)
-    * [ExecutionResult\<O>](#executionresulto)
-    * [ExecutionEngine](#executionengine)
-    * [StepFactory](#stepfactory)
-  * [Working with various steps](#working-with-various-steps)
+    - [Exectuable\<I, O>](#exectuablei-o)
+    - [Step\<I, O>](#stepi-o)
+    - [Flow\<I, O>](#flowi-o)
+    - [ExecutionResult\<O>](#executionresulto)
+    - [ExecutionEngine](#executionengine)
+    - [StepFactory](#stepfactory)
+  * [Various steps and their usages](#various-steps-and-their-usages)
+    - [AsyncStep](#asyncstep)
   * [Bonus: Injecting other Steps](#bonus-injecting-other-steps)
 <!--te-->
 
@@ -155,7 +156,9 @@ Let's kick-off by understanding the key concepts of SJF.
 * #### StepFactory
   > This `factory` class helps to create the various types of step that SJF offers. These steps will be discussed in detail in the later section of this article.
 
-## AsyncStep
+## Various steps and their usages
+
+#### AsyncStep
   This step is used to execute an operation asynchronously. If an instance of `ExecutorService` is passed in, then the execution will happen on a thread from the same `ExecutorService` otherwise a new thread will be spawned to execute the step. There can be 2 ways of performing an asynchronous operation:
   * Fire and Forget Asynchronous Operation: the operation will be executed in a different thread (or in executor if provided) and no way to get the result (if any). Output type of this step will be the same as the input.
   ```java
@@ -186,8 +189,7 @@ Let's kick-off by understanding the key concepts of SJF.
     .then(completable -> completable.waitForCompletion(2, TimeUnit.SECONDS))
   ```
 
-## Working with various other steps
-  >TO BE UPDATED
+TO BE UPDATED WITH MORE STEPS
 
 ## Bonus: Injecting Steps
   > As SJF uses our home grown dependency injection framework [SDF](https://github.com/simplj/sdf), it is possible to inject and run steps/sub-flows dynamically in a flow. This can help running different sub-flows according to the need.
