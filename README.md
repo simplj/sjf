@@ -36,7 +36,7 @@ Table of contents
     * [ExecutionEngine](#executionengine)
     * [StepFactory](#stepfactory)
   * [Working with various steps](#working-with-various-steps)
-  * [Bonus: Injecting Steps](#bonus-injecting-steps)
+  * [Bonus: Injecting other Steps](#bonus-injecting-other-steps)
 <!--te-->
 
 ## Key Concepts
@@ -69,7 +69,7 @@ Let's kick-off by understanding the key concepts of SJF.
   > ```
   > In the above example the method `divide` throws a checked exception and to use it in a `Function` we have to wrap it inside `try-catch` and on the other hand we can simply use the unsafe method `divide` with no exception handling using `Executable`.
   > 
-  > Ok, the next question is how is the exception handled then in case of using `Executable`? The answer is, at the time of execution i.e. when I am executing the exectuable I need to handle the exception. This makes sense because exception occurs while executing not while defining. Following code explains execution of `Executable` vs `Function`.
+  > Okay, the next question could be, how is the exception handled then in case of using `Executable`? The answer is, at the time of execution i.e. when I am executing the exectuable I need to handle the exception. This makes sense because exception occurs while executing not while defining. Following code explains execution of `Executable` vs `Function`.
   > ```java
   > int a = //user input
   > int b = //user input
@@ -155,7 +155,38 @@ Let's kick-off by understanding the key concepts of SJF.
 * #### StepFactory
   > This `factory` class helps to create the various types of step that SJF offers. These steps will be discussed in detail in the later section of this article.
 
-## Working with various steps
+## AsyncStep
+  This step is used to execute an operation asynchronously. If an instance of `ExecutorService` is passed in, then the execution will happen on a thread from the same `ExecutorService` otherwise a new thread will be spawned to execute the step. There can be 2 ways of performing an asynchronous operation:
+  * Fire and Forget Asynchronous Operation: the operation will be executed in a different thread (or in executor if provided) and no way to get the result (if any). Output type of this step will be the same as the input.
+  ```java
+  public void logEvent(Event event) {
+    //event logging code goes here...
+  }
+
+  //To use logEvent asynchronously, StepFactory
+  StepFactory.asyncStep(x -> logEvent(new EventStep(/*Event Parameters*/)))
+
+  //This can also be used directly within a flow using flow's `async` api.
+  Step.lift("first operation", firstOp).toFlow()
+    .then("second operation", secondOp)
+    .async(x -> logEvent(new Event(/*Event Parameters*/)))
+  ```
+
+  * Completable Asynchronous Operation: the operation will be executed in a different thread (or in executor if provided) and the result can be used later in the flow. This step returns a `Completable<O>` object which in turns return a `CompletionResult<O>` instance as result. `CompletionResult<O>` contains information like if the operation timedOut, if the operation was successful, the result if successful and the error if failed. To use the result later, it must be retained by a name and obtained by the same name when needed.
+  ```java
+  public PersistResult persistLog(LogDetail detail) {
+    //actual persisting code goes here...
+  }
+
+  //To use logEvent asynchronously, StepFactory
+  StepFactory.completableAsyncStep(x -> persistLog(new LogDetail(/*Log Parameters*/))).retainCompletable("logPersistResult").toFlow()
+    .then("operation1", op1)
+    .then("operation2", op2)
+    .obtainCompletable("logPersistResult", PersistResult.class)
+    .then(completable -> completable.waitForCompletion(2, TimeUnit.SECONDS))
+  ```
+
+## Working with various other steps
   >TO BE UPDATED
 
 ## Bonus: Injecting Steps
