@@ -43,7 +43,7 @@ Table of contents
 Let's kick-off by understanding the key concepts of SJF.
 
 * #### Exectuable\<I, O>
-  > A piece of code which can execute. It takes an input of type `I` and produces an output of type `O`. This is a `FunctionalInterface`, hence can be written as `lambda functions`. Now, you may ask that we already have `java.util.function.Function<I, O>` in java and why we need another `FunctionalInterface`? Well, the answer is, we cannot pass unsafe code (i.e. code which can throw `Exception`) directly into a `Function` without handling it but we can do this with an `Executable`. Enough talking, now, let's understand the difference in the below code:
+  > A piece of code which can execute. It takes an input of type `I` and produces an output of type `O`. This is a `FunctionalInterface`, hence can be written as `lambda functions`. Now, you may ask that we already have `java.util.function.Function<I, O>` in java and why we need another `FunctionalInterface`? Well, the answer is, we cannot pass unsafe code (i.e. code which can throw `Exception`) directly into a `Function` without handling it but we can do this with an `Executable`. Enough talking, now, let's do some coding to understand the difference:
   > ```java
   > class CannotDivideByZeroException extends Exception {...}
   > 
