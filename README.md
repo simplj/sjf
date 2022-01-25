@@ -8,9 +8,12 @@
 
   > Last but certainly not the least is debugging - when we deploy our code in a enviromment and some flow breaks. We have to rely on logs that are already present, if they are not sufficient putting further logs and redeploy and replay the flow to identify the issue. I know there is a way of remote-debugging but not every where it can be used (for example if the environment is running behind a firewall) and even in remote-debugging we have to replay the flow to identify the issue.
 
-  I am sure most (if not all) of us has faced these problems some time or the other with an impact of medium to heavy, and this motivated me to for SJF to resolve these problems fully (or as much as possible).
+  I am sure most (if not all) of us has faced these problems some time or the other with an impact of medium to heavy, and this motivated me to develop a framework which would resolve these problems fully (or as much as possible). Let's take a quick look at how does it help solving the problems.
+    * This framework enables one to construct a business flow (or a feature) simply by configuring individual steps (that are part of the enitre flow) in various way as needed. Thus the name *Simple Java Flows* or *SJF*. This increases the readability of the flow meaning a new comer can quickly get a overall picture of what the flow is doing just by looking at it's definition
+    * When a flow is executed, it returns the execution's context comprising of _a) what was the input for the step, b) how much time the step took and c) whether the step produced an output or threw exception_. This gives an end-to-end knowlwedge of how the flow executed which eases debugging.
+    * The framework comes with capabilities of performing common operations by itself, enabling developer to focus only on writing the business logic part and thus gaining individual and team productivity. The list of *common operations* that SJF offers currently are not exhaustive, because covering all operations which may sound redundant is not a quick work but they are in progress and will be published as a plug-and-play fashion gradually. Nonetheless, the framework already covers quite a few basic operations which will be discussed in the later section, to name a few: retryable step, bookmarking within a flow (helps in writing [idempotent operations](https://en.wikipedia.org/wiki/Idempotence)), triggering async step, parallel steps, pausing for a condidtion to satisfy etc.
 
-Sounds exciting? If not then apprecieate your time reading till here and have a good day, otherwise let's jump right in to get familiar with the framework 😉
+Sounds exciting? Let's jump right in to get familiar with the framework then 😉
 
 ## Maven Dependency
 [![Maven Central](https://img.shields.io/maven-central/v/com.simplj.flows/sjf.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.simplj.flows%22%20AND%20a:%22sjf%22)
@@ -44,7 +47,7 @@ Let's kick-off by understanding the key concepts of SJF.
   > ```java
   > class CannotDivideByZeroException extends Exception {...}
   > 
-  > //an unsafe method which throws IOException
+  > //an unsafe method which throws a checked exception
   > public int divide(int dividend, int divisor) throws CannotDivideByZeroException {
   >   if (divisor == 0) throw new CannotDivideByZeroException();
   >   return divident / divisor;
