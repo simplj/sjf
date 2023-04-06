@@ -1,4 +1,4 @@
-# [S]imple [J]ava [F]lows
+# [S]imple [J]ava [F]lows [![Maven Central](https://img.shields.io/maven-central/v/com.simplj.flows/sjf.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.simplj.flows%22%20AND%20a:%22sjf%22) [![javadoc](https://javadoc.io/badge2/com.simplj.flows/sjf/javadoc.svg)](https://javadoc.io/doc/com.simplj.flows/sjf)
 
 ## Motivation
   From my experience in coding java, I have felt that,
@@ -16,7 +16,6 @@
 Sounds exciting? Let's jump right in to get familiar with the framework then 😉
 
 ## Maven Dependency
-[![Maven Central](https://img.shields.io/maven-central/v/com.simplj.flows/sjf.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.simplj.flows%22%20AND%20a:%22sjf%22)
 ```
 <dependency>
   <groupId>com.simplj.flows</groupId>
