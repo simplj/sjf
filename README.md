@@ -47,6 +47,9 @@ Table of contents
 ## Key Concepts
 Let's kick-off by understanding the key concepts of SJF.
 
+* #### Exectuable\<I, O>
+  > SJF uses Executable from [jlx](https://github.com/simplj/jlx) library. Please refer to [jlx](https://github.com/simplj/jlx) for details about Executable and other lambda funcionalities.
+
 * #### Step\<I, O>
   > When we execute an `Executable<I, O>` with an `I`, we get just the result i.e. `O`. We don't have any other way to know how much time it took to execute. (_Yes, we can use startTs and endTs before and after the execution to calculate the time, but as I said earlier, that would be a repetitive code_) Here comes `Step<I, O>`. A Step is nothing but an enhanced version of Executable. We can lift an executable to a step using the `Step.lift(Executable<I, O> x)` method. A step can also be named by using the overloaded `lift` method and passing a name for the step. When we execute a step, we get `ExecutionResult<O>` and from this we can know the result (of type `O` if the execution was successful), error (if the execution failed), and the duration of the execution.
 
