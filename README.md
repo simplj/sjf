@@ -28,7 +28,6 @@ Table of contents
 =================
 <!--ts-->
   * [Key Concepts](#key-concepts)
-    - [Exectuable\<I, O>](#exectuablei-o)
     - [Step\<I, O>](#stepi-o)
     - [Flow\<I, O>](#flowi-o)
     - [ExecutionResult\<O>](#executionresulto)
@@ -47,49 +46,6 @@ Table of contents
 
 ## Key Concepts
 Let's kick-off by understanding the key concepts of SJF.
-
-* #### Exectuable\<I, O>
-  > A piece of code which can execute. It takes an input of type `I` and produces an output of type `O`. This is a `FunctionalInterface`, hence can be written as `lambda functions`. Now, you may ask that we already have `java.util.function.Function<I, O>` in java and why we need another `FunctionalInterface`? Well, the answer is, we cannot pass unsafe code (i.e. code which can throw `Exception`) directly into a `Function` without handling it but we can do this with an `Executable`. Enough talking, now, let's do some coding to understand the difference:
-  > ```java
-  > class CannotDivideByZeroException extends Exception {...}
-  > 
-  > //an unsafe method which throws a checked exception
-  > public int divide(int dividend, int divisor) throws CannotDivideByZeroException {
-  >   if (divisor == 0) throw new CannotDivideByZeroException();
-  >   return divident / divisor;
-  > }
-  > 
-  > //Using Function:
-  > Function<Integer, Integer> dividerF = n -> {
-  >   int res;
-  >   try {
-  >     res = divide(n);
-  >   } catch (CannotDivideByZeroException ex) {
-  >     res = 0;
-  >   }
-  >   return res;
-  > }
-  > 
-  > //Using Executable:
-  > Executable<Integer, Integer> dividerE = n -> divide(n); //or using method reference: this::divide
-  > ```
-  > In the above example the method `divide` throws a checked exception and to use it in a `Function` we have to wrap it inside `try-catch` and on the other hand we can simply use the unsafe method `divide` with no exception handling using `Executable`.
-  > 
-  > Okay, the next question could be, how is the exception handled then in case of using `Executable`? The answer is, at the time of execution i.e. when I am executing the exectuable I need to handle the exception. This makes sense because exception occurs while executing not while defining. Following code explains execution of `Executable` vs `Function`.
-  > ```java
-  > int a = //user input
-  > int b = //user input
-  > 
-  > //Using Function
-  > int res = divididerF.apply(a, b); //We don't know if exception occurred or not (I know we can handle using better design but that will add extra complexity to the simple code)
-  > 
-  > //Using Executable
-  > try {
-  >   int res = dividerE.execute(a, b);
-  > } catch (Exception ex) {
-  >   //Boom, exception occured while exeucuting, we got that information and can handle that here.
-  > }
-  > ```
 
 * #### Step\<I, O>
   > When we execute an `Executable<I, O>` with an `I`, we get just the result i.e. `O`. We don't have any other way to know how much time it took to execute. (_Yes, we can use startTs and endTs before and after the execution to calculate the time, but as I said earlier, that would be a repetitive code_) Here comes `Step<I, O>`. A Step is nothing but an enhanced version of Executable. We can lift an executable to a step using the `Step.lift(Executable<I, O> x)` method. A step can also be named by using the overloaded `lift` method and passing a name for the step. When we execute a step, we get `ExecutionResult<O>` and from this we can know the result (of type `O` if the execution was successful), error (if the execution failed), and the duration of the execution.
